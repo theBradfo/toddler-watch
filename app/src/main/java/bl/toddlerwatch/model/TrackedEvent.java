@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+import bl.toddlerwatch.service.State;
+
 /**
  * Created by theBr on 7/30/2016.
  */
@@ -12,12 +14,12 @@ import java.util.Date;
 public final class TrackedEvent implements Parcelable {
     public final int id;
     public final Date eventTime;
-    public final String action;
+    public final State action;
 
     public TrackedEvent(int id, final Date eventTime, String action) {
         this.id = id;
         this.eventTime = eventTime;
-        this.action = action;
+        this.action = State.fromAction(action);
     }
 
     @Override
@@ -30,8 +32,7 @@ public final class TrackedEvent implements Parcelable {
         if (id != that.id) return false;
         if (eventTime != null ? !eventTime.equals(that.eventTime) : that.eventTime != null)
             return false;
-        return action != null ? action.equals(that.action) : that.action == null;
-
+        return action == that.action;
     }
 
     @Override
@@ -47,7 +48,7 @@ public final class TrackedEvent implements Parcelable {
         return "TrackedEvent{" +
                 "id=" + id +
                 ", eventTime=" + eventTime +
-                ", action='" + action + '\'' +
+                ", action=" + action +
                 '}';
     }
 
@@ -61,14 +62,15 @@ public final class TrackedEvent implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeLong(this.eventTime != null ? this.eventTime.getTime() : -1);
-        dest.writeString(this.action);
+        dest.writeInt(this.action == null ? -1 : this.action.ordinal());
     }
 
     protected TrackedEvent(Parcel in) {
         this.id = in.readInt();
         long tmpEventTime = in.readLong();
         this.eventTime = tmpEventTime == -1 ? null : new Date(tmpEventTime);
-        this.action = in.readString();
+        int tmpAction = in.readInt();
+        this.action = tmpAction == -1 ? null : State.values()[tmpAction];
     }
 
     public static final Creator<TrackedEvent> CREATOR = new Creator<TrackedEvent>() {

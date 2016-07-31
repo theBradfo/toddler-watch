@@ -7,7 +7,8 @@ import android.util.Log;
  */
 
 public final class Logger {
-    private Logger() { }
+    private Logger() {
+    }
 
     public static void LOGI(String tag, String message) {
         Log.i(tag, message);
@@ -15,6 +16,10 @@ public final class Logger {
 
     public static void LOGD(String tag, String message) {
         Log.d(tag, message);
+    }
+
+    public static void LOGW(String tag, String message) {
+        Log.w(tag, message);
     }
 
     public static void LOGE(String tag, String message) {
