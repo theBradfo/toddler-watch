@@ -30,4 +30,25 @@ public final class Day {
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         return calendar.getTime();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Day day = (Day) o;
+
+        if (month != day.month) return false;
+        if (year != day.year) return false;
+        return dayOfMonth == day.dayOfMonth;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = month;
+        result = 31 * result + year;
+        result = 31 * result + dayOfMonth;
+        return result;
+    }
 }

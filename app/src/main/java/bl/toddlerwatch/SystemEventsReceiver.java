@@ -7,9 +7,10 @@ import android.content.Intent;
 import java.util.Date;
 
 import bl.toddlerwatch.model.TrackedEvent;
-import bl.toddlerwatch.service.DataProvider;
+import bl.toddlerwatch.service.DataFactory;
 
-import static bl.toddlerwatch.util.Logger.*;
+import static bl.toddlerwatch.util.Logger.LOGD;
+import static bl.toddlerwatch.util.Logger.LOGE;
 
 /**
  * Created by theBradfo on 7/30/2016.
@@ -24,7 +25,7 @@ public class SystemEventsReceiver extends BroadcastReceiver {
 
         final Date current = new Date();
         String action = intent.getAction();
-        final int id = DataProvider.INSTANCE.getNextId();
+        final int id = DataFactory.INSTANCE.getNextId();
         final TrackedEvent event = new TrackedEvent(id, current, action);
 
         switch (intent.getAction()) {

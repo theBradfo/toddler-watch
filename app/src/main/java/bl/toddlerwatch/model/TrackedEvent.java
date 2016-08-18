@@ -2,6 +2,7 @@ package bl.toddlerwatch.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
@@ -13,8 +14,8 @@ import bl.toddlerwatch.service.State;
 
 public final class TrackedEvent implements Parcelable {
     public final int id;
-    public final Date eventTime;
-    public final State action;
+    public final @NonNull Date eventTime;
+    public final @NonNull State action;
 
     public TrackedEvent(int id, final Date eventTime, String action) {
         this.id = id;
